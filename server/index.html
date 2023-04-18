@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+
+    getData()
+
+    async function getData() {
+        const response = await fetch('http://localhost:3000/api/get');
+        console.log(response)
+        const res = await response.json();
+        console.log(res)
+    }
+</script>
+</body>
+</html>
