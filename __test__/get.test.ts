@@ -3,7 +3,7 @@ import {request} from "./index.http";
 
 describe('main', () => {
     it('get', async function () {
-        const response = await request.get("/api/get",null,{mode: 'no-cors'})
+        const response = await request.get("/api/get/params", null, {mode: 'no-cors'})
         const res = await response.json();
         expect(res).toStrictEqual({
             "name": "get"
