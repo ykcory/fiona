@@ -8,6 +8,7 @@ export interface Data {
 }
 
 export interface RequestConfig extends RequestInit {
+    baseURL?: string;
 }
 
 export class Fiona {
@@ -16,20 +17,16 @@ export class Fiona {
         response: any;
     };
 
-    constructor(public instanceinit = undefined) {
+    constructor(public instanceConfig: RequestConfig = {}) {
         this.interceptors = {
             request: new InterceptorManager(),
             response: new InterceptorManager()
         }
     }
 
-    getUri() {
-
-    }
-
     request(url: string, data?: Data, config?: RequestConfig) {
-        const {newUrl, newConfig} = mergeConfig(url, {}, data, config)
-        return fetch(url, newConfig);
+        const {newUrl, newConfig} = mergeConfig(url, data, this.instanceConfig, config)
+        return fetch(newUrl, newConfig);
     }
 
     private requestWithoutData(url: string, method: string, data?: Data, config?: RequestConfig) {
@@ -46,8 +43,8 @@ export class Fiona {
     //     return this.requestWithoutData(url, 'delete', init);
     // };
 
-    get(url: string, data?: Pick<Data, 'params' | 'query'>, init?: RequestInit) {
-        return this.requestWithoutData(url, 'get', data, init);
+    get(url: string, data?: Pick<Data, 'params' | 'query'>, config?: RequestInit) {
+        return this.requestWithoutData(url, 'get', data, config);
     };
 
     // head(url: string, init?: RequestInit) {

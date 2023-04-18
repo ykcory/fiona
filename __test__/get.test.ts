@@ -3,14 +3,14 @@ import {request} from "./index.http";
 
 describe('main', () => {
     it('get', async function () {
-        const response = await request.get("http://localhost:3000/api/get",null,{mode: 'no-cors'})
+        const response = await request.get("/api/get",null,{mode: 'no-cors'})
         const res = await response.json();
         expect(res).toStrictEqual({
             "name": "get"
         });
     });
     it('get with query', async function () {
-        const response = await request.get("http://localhost:3000/api/get/query", {
+        const response = await request.get("/api/get/query", {
             query: {
                 name: 'get-query'
             }
@@ -21,7 +21,7 @@ describe('main', () => {
         });
     });
     it('get with params', async function () {
-        const response = await request.get("http://localhost:3000/api/get/:name", {
+        const response = await request.get("/api/get/:name", {
             params: {
                 name: 'get-params'
             }
