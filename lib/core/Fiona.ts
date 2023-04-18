@@ -1,13 +1,22 @@
 import {InterceptorManager} from "./InterceptorManager";
 import mergeConfig from "./mergeConfig";
 
+export interface Data {
+    params?: Record<string, string | number>;
+    query?: any;
+    body?: BodyInit | null;
+}
+
+export interface RequestConfig extends RequestInit {
+}
+
 export class Fiona {
     interceptors: {
         request: any;
         response: any;
     };
 
-    constructor(public instanceConfig = undefined) {
+    constructor(public instanceinit = undefined) {
         this.interceptors = {
             request: new InterceptorManager(),
             response: new InterceptorManager()
@@ -18,50 +27,47 @@ export class Fiona {
 
     }
 
-    request(url: string, config: any) {
-        return fetch(url,{
-            mode:'no-cors',
-        })
+    request(url: string, data?: Data, config?: RequestConfig) {
+        const {newUrl, newConfig} = mergeConfig(url, {}, data, config)
+        return fetch(url, newConfig);
     }
 
-    private requestWithoutData(url: string, method: string, config: any) {
-        return this.request(url, {
-            method
-        });
+    private requestWithoutData(url: string, method: string, data?: Data, config?: RequestConfig) {
+        return this.request(url, data, Object.assign({method}, config));
     }
 
-    private requestWithData(url: string, method: string, data: any, config: any) {
-        return this.request(url, {
-            method,
-        });
-    }
+    // private requestWithData(url: string, method: string, init?: RequestInit) {
+    //     return this.request(url, {
+    //         method,
+    //     });
+    // }
 
-    delete(url: string, config: any) {
-        return this.requestWithoutData(url, 'delete', config);
+    // delete(url: string, init?: RequestInit) {
+    //     return this.requestWithoutData(url, 'delete', init);
+    // };
+
+    get(url: string, data?: Pick<Data, 'params' | 'query'>, init?: RequestInit) {
+        return this.requestWithoutData(url, 'get', data, init);
     };
 
-    get(url: string, config: any) {
-        return this.requestWithoutData(url, 'get', config);
-    };
+    // head(url: string, init?: RequestInit) {
+    //     return this.requestWithoutData(url, 'head', init);
+    // };
 
-    head(url: string, config: any) {
-        return this.requestWithoutData(url, 'head', config);
-    };
-
-    options(url: string, config: any) {
-        return this.requestWithoutData(url, 'options', config);
-    };
-
-    post(url: string, data: any, config: any) {
-        return this.requestWithData(url, 'post', data, config);
-    }
-
-    put(url: string, data: any, config: any) {
-        return this.requestWithData(url, 'put', data, config);
-    }
-
-    patch(url: string, data: any, config: any) {
-        return this.requestWithData(url, 'patch', data, config);
-    }
+    // options(url: string, init?: RequestInit) {
+    //     return this.requestWithoutData(url, 'options', init);
+    // };
+    //
+    // post(url: string, data: any, init?: RequestInit) {
+    //     return this.requestWithData(url, 'post', init);
+    // }
+    //
+    // put(url: string, data: any, init?: RequestInit) {
+    //     return this.requestWithData(url, 'put', init);
+    // }
+    //
+    // patch(url: string, data: any, init?: RequestInit) {
+    //     return this.requestWithData(url, 'patch', init);
+    // }
 
 }
