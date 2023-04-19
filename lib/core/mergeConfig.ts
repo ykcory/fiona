@@ -18,6 +18,7 @@ export default function mergeConfig(url: string, data?: Data, defaultConfig?: Re
         })
     }
 
+    // TODO: query type maybe not string | number
     if (data?.query) {
         const query = Object.keys(data.query).map(key => `${key}=${data.query[key]}`).join('&');
         newUrl = newUrl.includes('?') ? `${newUrl}&${query}` : `${newUrl}?${query}`;

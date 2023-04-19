@@ -1,5 +1,5 @@
 import {describe, it, test, expect} from "vitest";
-import {request} from "./index.http";
+import {request} from "./get.http";
 
 describe('main', () => {
     it('get', async function () {
