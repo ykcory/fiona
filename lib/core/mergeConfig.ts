@@ -1,13 +1,13 @@
 import {Data, RequestConfig} from "./Fiona";
 
-export default function mergeConfig(url: string, data?: Data, defaultConfig?: RequestConfig, config?: RequestConfig): {
+export default function mergeConfig(url: string, data?: Data, initConfig?: RequestConfig, config?: RequestConfig): {
     newUrl: string,
     newConfig: RequestInit
 } {
     let newUrl = url;
 
-    if (defaultConfig?.baseURL) {
-        newUrl = defaultConfig.baseURL + url;
+    if (initConfig?.baseURL) {
+        newUrl = initConfig.baseURL + url;
     }
 
     if (data?.params) {
@@ -24,10 +24,21 @@ export default function mergeConfig(url: string, data?: Data, defaultConfig?: Re
         newUrl = newUrl.includes('?') ? `${newUrl}&${query}` : `${newUrl}?${query}`;
     }
 
-    console.log(newUrl, "newUrl")
+    const newRequestConfig = Object.assign({}, initConfig, config, {
+        body: data?.body
+    })
+
+    const filterFields = ['baseURL'];
+
+    const newConfig: RequestInit = Object.keys(newRequestConfig).reduce((acc: Record<string, any>, key) => {
+        if (!filterFields.includes(key)) {
+            acc[key] = newRequestConfig[key as keyof RequestConfig];
+        }
+        return acc as RequestInit
+    }, {});
 
     return {
         newUrl,
-        newConfig: config || {}
+        newConfig
     }
 }

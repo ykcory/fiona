@@ -6,6 +6,7 @@ import {readFileSync} from "fs";
 import {join} from "path";
 import router from "./router.mjs";
 import getServer from "./get-server.mjs";
+import instanceServer from "./instance-server.mjs";
 
 // example
 router.get('/html', async (ctx, next) => {
@@ -14,7 +15,9 @@ router.get('/html', async (ctx, next) => {
     ctx.body = readFileSync(filePath)
 });
 
-getServer()
+getServer();
+
+instanceServer();
 
 // post
 router.post('/post', async (ctx, next) => {

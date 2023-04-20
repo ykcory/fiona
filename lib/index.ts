@@ -3,8 +3,8 @@ import defaults from "./defaults/index";
 import HttpStatusCode from "./helpers/HttpStatusCode";
 
 
-function createInstance(defaultConfig:RequestConfig){
-    return new Fiona(defaultConfig);
+function createInstance(initConfig:RequestConfig){
+    return new Fiona(initConfig);
 }
 
 export {

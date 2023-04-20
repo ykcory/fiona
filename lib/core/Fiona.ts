@@ -17,7 +17,7 @@ export class Fiona {
         response: any;
     };
 
-    constructor(public instanceConfig: RequestConfig = {}) {
+    constructor(public initConfig: RequestConfig = {}) {
         this.interceptors = {
             request: new InterceptorManager(),
             response: new InterceptorManager()
@@ -25,7 +25,7 @@ export class Fiona {
     }
 
     request(url: string, data?: Data, config?: RequestConfig) {
-        const {newUrl, newConfig} = mergeConfig(url, data, this.instanceConfig, config)
+        const {newUrl, newConfig} = mergeConfig(url, data, this.initConfig, config)
         return fetch(newUrl, newConfig);
     }
 
