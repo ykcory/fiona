@@ -29,42 +29,36 @@ export class Fiona {
         return fetch(newUrl, newConfig);
     }
 
-    private requestWithoutData(url: string, method: string, data?: Data, config?: RequestConfig) {
+    private requestWithData(url: string, method: string, data?: Data, config?: RequestConfig) {
         return this.request(url, data, Object.assign({method}, config));
     }
 
-    // private requestWithData(url: string, method: string, init?: RequestInit) {
-    //     return this.request(url, {
-    //         method,
-    //     });
-    // }
-
-    // delete(url: string, init?: RequestInit) {
-    //     return this.requestWithoutData(url, 'delete', init);
-    // };
-
-    get(url: string, data?: Pick<Data, 'params' | 'query'>, config?: RequestInit) {
-        return this.requestWithoutData(url, 'get', data, config);
+    delete(url: string, data?: Pick<Data, 'params' | 'query'>, config?: RequestConfig) {
+        return this.requestWithData(url, 'delete', data, config);
     };
 
-    // head(url: string, init?: RequestInit) {
-    //     return this.requestWithoutData(url, 'head', init);
-    // };
+    get(url: string, data?: Pick<Data, 'params' | 'query'>, config?: RequestConfig) {
+        return this.requestWithData(url, 'get', data, config);
+    };
 
-    // options(url: string, init?: RequestInit) {
-    //     return this.requestWithoutData(url, 'options', init);
-    // };
-    //
-    // post(url: string, data: any, init?: RequestInit) {
-    //     return this.requestWithData(url, 'post', init);
-    // }
-    //
-    // put(url: string, data: any, init?: RequestInit) {
-    //     return this.requestWithData(url, 'put', init);
-    // }
-    //
-    // patch(url: string, data: any, init?: RequestInit) {
-    //     return this.requestWithData(url, 'patch', init);
-    // }
+    head(url: string, data?: Pick<Data, 'params' | 'query'>, config?: RequestConfig) {
+        return this.requestWithData(url, 'head', data, config);
+    };
+
+    options(url: string, data?: Pick<Data, 'params' | 'query'>, config?: RequestConfig) {
+        return this.requestWithData(url, 'options', data, config);
+    };
+
+    post(url: string, data?: Data, config?: RequestConfig) {
+        return this.requestWithData(url, 'post', data, config);
+    };
+
+    put(url: string, data?: Data, config?: RequestConfig) {
+        return this.requestWithData(url, 'put', data, config);
+    };
+
+    patch(url: string, data?:Data, config?: RequestConfig) {
+        return this.requestWithData(url, 'patch', data, config);
+    };
 
 }
